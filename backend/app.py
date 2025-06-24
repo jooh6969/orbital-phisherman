@@ -6,7 +6,7 @@ from backend.phish_llm import analyze
 
 app = Flask(__name__)
 
-with open("phishing_model.pkl", "rb") as f:
+with open("backend\\phishing_model.pkl", "rb") as f:
     model = pickle.load(f)
 
 test_url = "http://google.com"

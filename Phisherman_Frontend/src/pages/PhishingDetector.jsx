@@ -4,6 +4,7 @@ import supabase from "../hooks/createClient";
 import {
   Shield,
   AlertTriangle,
+  CheckCircle,
   ExternalLink,
   MessageSquare,
   Zap,
