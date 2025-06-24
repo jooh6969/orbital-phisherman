@@ -74,7 +74,7 @@ export default function PhishingDetector() {
     setError(null);
 
     try {
-      const res = await fetch("http://localhost:5000/api/llm", {
+      const res = await fetch("https://orbital-phisherman.onrender.com/api/llm", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -98,7 +98,7 @@ export default function PhishingDetector() {
 
       //*----------------- CODE FOR THE ML --------------------*//
       //   try {
-      //     const ml_res = await fetch("http://localhost:5000/predict", {
+      //     const ml_res = await fetch("https://orbital-phisherman.onrender.com/predict", {
       //       method: "POST",
       //       headers: {
       //         "Content-Type": "application/json",

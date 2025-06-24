@@ -4,6 +4,8 @@ import PhishingDetector from "./pages/PhishingDetector";
 import Login from "./pages/Login";
 import Forum from "./pages/Forum";
 import SignUp from "./pages/SignUp";
+import RealityMode from "./pages/RealityModeScenario";
+import AboutUs from "./pages/AboutUs";
 import NavBar from "./components/NavBar";
 import "./App.css";
 import "./index.css";
@@ -16,14 +18,10 @@ function App() {
         <Routes>
           <Route path="/predict" element={<PhishingDetector />} />
           <Route path="/forum" element={<Forum />} />
-          <Route
-            path="/education"
-            element={
-              <div className="p-8 text-center">Education Page Coming Soon</div>
-            }
-          />
+          <Route path="/education" element={<RealityMode />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/aboutus" element={<AboutUs />} />
         </Routes>
       </div>
     </Router>
