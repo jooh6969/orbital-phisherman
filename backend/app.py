@@ -1,11 +1,10 @@
 import pickle
-from feature_extraction import extract_features
+from backend.feature_extraction import extract_features
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from phish_llm import analyze
+from backend.phish_llm import analyze
 
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173"])
 
 with open("phishing_model.pkl", "rb") as f:
     model = pickle.load(f)
