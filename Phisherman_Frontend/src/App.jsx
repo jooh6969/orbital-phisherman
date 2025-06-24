@@ -4,7 +4,7 @@ import PhishingDetector from "./pages/PhishingDetector";
 import Login from "./pages/Login";
 import Forum from "./pages/Forum";
 import SignUp from "./pages/SignUp";
-import RealityMode from "./pages/RealityModeScenario";
+import RealityMode from "./pages/RealityMode";
 import AboutUs from "./pages/AboutUs";
 import NavBar from "./components/NavBar";
 import "./App.css";
