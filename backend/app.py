@@ -3,10 +3,12 @@ from backend.feature_extraction import extract_features
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from backend.phish_llm import analyze
+import os
 
 app = Flask(__name__)
 
-with open("backend\\phishing_model.pkl", "rb") as f:
+model_path = os.path.join(os.path.dirname(__file__), "phishing_model.pkl")
+with open(model_path, "rb") as f:
     model = pickle.load(f)
 
 test_url = "http://google.com"
