@@ -2,10 +2,11 @@ import pickle
 from backend.feature_extraction import extract_features
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import backend.phish_llm
 import os
 
 app = Flask(__name__)
+
+import backend.phish_llm
 
 model_path = os.path.join(os.path.dirname(__file__), "phishing_model.pkl")
 with open(model_path, "rb") as f:

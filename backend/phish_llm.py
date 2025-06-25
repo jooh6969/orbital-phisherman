@@ -7,8 +7,9 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import re
 import json
+from backend.app import app
 
-app = Flask(__name__)
+
 CORS(app, origins=["http://localhost:5174", "https://orbital-phishermen.netlify.app"])
 
 @app.route('/api/llm', methods=['POST'])
