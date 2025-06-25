@@ -16,6 +16,7 @@ function App() {
       <div className="min-h-screen bg-gray-50">
         <NavBar />
         <Routes>
+          <Route path="/" element={<PhishingDetector />} />
           <Route path="/predict" element={<PhishingDetector />} />
           <Route path="/forum" element={<Forum />} />
           <Route path="/education" element={<RealityMode />} />
