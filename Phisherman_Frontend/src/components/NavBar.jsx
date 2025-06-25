@@ -71,12 +71,12 @@ export default function NavBar() {
                   <Globe className="w-5 h-5" />
                   Reality Mode
                 </Link>
-                <a
-                  href="#"
+                <Link
+                  to="/aboutus"
                   className="flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors"
                 >
                   About Us
-                </a>
+                </Link>
                 {userEmail && loggedIn ? (
                   <button
                     className="ml-1 px-4 py-2 text-base font-bold bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors border border-blue-700 shadow"

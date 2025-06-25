@@ -9,7 +9,7 @@ import re
 import json
 
 app = Flask(__name__)
-CORS(app, origin = ["http://localhost:5173"])
+CORS(app, origins=["http://localhost:5174", "https://orbital-phishermen.netlify.app"])
 
 @app.route('/api/llm', methods=['POST'])
 def analyze():

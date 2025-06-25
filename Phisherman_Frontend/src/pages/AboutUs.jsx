@@ -3,7 +3,6 @@ import NavBar from "../components/NavBar";
 const AboutUs = () => {
   return (
     <>
-      <NavBar />
       <div className="min-h-screen bg-gray-50 pt-20 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="bg-white rounded-lg shadow-sm p-8">
@@ -64,7 +63,7 @@ const AboutUs = () => {
               
               <div className="flex justify-center">
                 <a
-                  href="https://github.com/stanley-ting/orbital-phisherman"
+                  href="https://github.com/jooh6969/orbital-phisherman"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors text-lg"

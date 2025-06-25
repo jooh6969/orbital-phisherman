@@ -2,7 +2,7 @@ import pickle
 from backend.feature_extraction import extract_features
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from backend.phish_llm import analyze
+import backend.phish_llm
 import os
 
 app = Flask(__name__)
