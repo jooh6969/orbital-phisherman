@@ -120,7 +120,7 @@ export default function PhishingDetector() {
       //     setMLResult(null);
       //   }
       const ml_res = {
-        result: "Phishing",
+        result: "Not Phishing",
         confidence: "90.2",
       }; // HARD CODED CODE FOR NOW TO USE ON THE FRONT END
 
