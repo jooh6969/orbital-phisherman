@@ -23,7 +23,7 @@ export default function PhishingForumContainer() {
         .from("forum_db")
         .select();
       //console.log(forumError, reportsData, supabase);
-      
+
       const { data: scamTypesData } = await supabase
         .from("forum_db")
         .select("scamType");
@@ -41,6 +41,7 @@ export default function PhishingForumContainer() {
   }
 
   useEffect(() => {
+    // Call getReports when component mounts
     getReports();
   }, []); // Empty dependency array means this runs once on mount
 
@@ -55,6 +56,41 @@ export default function PhishingForumContainer() {
 
   const handleToggleExpand = (reportId) => {
     setExpandedPost(expandedPost === reportId ? null : reportId);
+  };
+
+  const handleDeletePost = async (postId) => {
+    if (
+      confirm(
+        "Are you sure you want to delete this post? This action cannot be undone."
+      )
+    ) {
+      const { error } = await supabase
+        .from("forum_db")
+        .delete()
+        .eq("id", postId);
+
+      if (error) {
+        console.error("Failed to delete post:", error.message);
+        alert("Failed to delete post: " + error.message);
+        return;
+      }
+
+      // Show success notification
+      const notification = document.createElement("div");
+      notification.className =
+        "fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-pulse";
+      notification.textContent = "Post deleted successfully!";
+      document.body.appendChild(notification);
+      setTimeout(() => notification.remove(), 3000);
+
+      // Refresh reports
+      getReports();
+
+      // Close expanded post if it was deleted
+      if (expandedPost === postId) {
+        setExpandedPost(null);
+      }
+    }
   };
 
   return (
@@ -83,6 +119,7 @@ export default function PhishingForumContainer() {
           onVote={handleVote}
           expandedPost={expandedPost}
           onToggleExpand={handleToggleExpand}
+          onDeletePost={handleDeletePost}
         />
 
         <Footer />
