@@ -46,6 +46,17 @@ export default function Login() {
       console.log(error.message);
       return error.message;
     }
+    localStorage.setItem("userId", data.user.id);
+
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("points")
+      .eq("id", data.user.id)
+      .single();
+
+    if (!profileError) {
+      localStorage.setItem("points", profile.points ?? 0);
+    }
 
     console.log("Sign in Successful", data.user);
     return "";

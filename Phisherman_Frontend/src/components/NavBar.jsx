@@ -6,38 +6,83 @@ import supabase from "../hooks/createClient";
 export default function NavBar() {
   const [userEmail, setUserEmail] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [userPoints, setUserPoints] = useState(null);
 
   useEffect(() => {
-    async function fetchUser() {
+    let currentUserId = null;
+
+    async function fetchUserAndPoints() {
       const {
         data: { user },
       } = await supabase.auth.getUser();
+
       if (user && user.email) {
-        console.log(user);
         setUserEmail(user.email);
         setLoggedIn(true);
+        currentUserId = user.id;
+        fetchUserPoints(user.id);
       } else {
         setUserEmail(null);
         setLoggedIn(false);
+        setUserPoints(null);
       }
     }
-    fetchUser();
+
+    async function fetchUserPoints(userId) {
+      const { data: profile, error } = await supabase
+        .from("profiles")
+        .select("points")
+        .eq("user_id", userId)
+        .single();
+
+      if (!error && profile) {
+        setUserPoints(profile.points ?? 0);
+      } else {
+        console.error("Failed to fetch user points:", error?.message);
+      }
+    }
+
+    
+    fetchUserAndPoints();
+
+    
+    const refreshPoints = () => {
+      if (currentUserId) {
+        fetchUserPoints(currentUserId);
+      }
+    };
+
+    window.addEventListener("pointsUpdated", refreshPoints);
+
+    
+    return () => {
+      window.removeEventListener("pointsUpdated", refreshPoints);
+    };
   }, []);
 
   return (
     <nav className="bg-white/90 shadow-lg rounded-b-2xl backdrop-blur-md border-b border-blue-100">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex flex-col">
-          <div className="py-1 text-xs text-gray-500 font-medium text-right">
+          <div className="py-1 text-xs text-gray-500 font-medium text-right flex justify-between items-center">
             {userEmail ? (
-              <span>
-                Logged in as{" "}
-                <span className="text-blue-700 font-semibold">{userEmail}</span>
-              </span>
+              <div className="text-right w-full flex justify-end gap-4">
+                <span>
+                  Logged in as{" "}
+                  <span className="text-blue-700 font-semibold">{userEmail}</span>
+                </span>
+                <span>
+                  Points:{" "}
+                  <span className="text-green-600 font-semibold">
+                    {userPoints ?? "-"}
+                  </span>
+                </span>
+              </div>
             ) : (
-              <span>Not logged in</span>
+              <span className="text-right w-full">Not logged in</span>
             )}
           </div>
+
           <div className="flex justify-between h-16 items-center">
             <Link
               to="/predict"
@@ -84,6 +129,7 @@ export default function NavBar() {
                       await supabase.auth.signOut();
                       setUserEmail(null);
                       setLoggedIn(false);
+                      setUserPoints(null);
                       window.location.reload();
                     }}
                   >

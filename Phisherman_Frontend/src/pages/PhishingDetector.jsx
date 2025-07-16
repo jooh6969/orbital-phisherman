@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import supabase from "../hooks/createClient";
+import Tesseract from "tesseract.js";
 
 import {
   Shield,
@@ -65,6 +66,31 @@ export default function PhishingDetector() {
       return "";
     }
   }
+
+   const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setLoading(true);
+    setResult(null);
+    setError(null);
+
+    try {
+      const {
+        data: { text },
+      } = await Tesseract.recognize(file, "eng");
+
+      console.log("Extracted text:", text);
+      setInputText(text);
+      await handleProcess();
+    } catch (error) {
+      console.error("OCR error:", error);
+      setError("Failed to extract text from image.");
+    }
+
+    setLoading(false);
+  };
+
 
   const handleProcess = async () => {
     setLoading(true);
@@ -242,6 +268,21 @@ export default function PhishingDetector() {
                     {inputText.length} characters
                   </div>
                 </div>
+              </div>
+
+              <div className="mb-6">
+                <label className="block text-sm font-semibold text-gray-700 mb-3">
+                  Or Upload a Screenshot
+                </label>
+                <label className="cursor-pointer inline-flex items-center px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 text-sm font-semibold rounded-xl shadow-sm transition duration-200">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="hidden"
+                  />
+                  Choose Image
+                </label>
               </div>
 
               <button

@@ -12,7 +12,7 @@ from backend.app import app
 #app = Flask(__name__)
 #reinclude this line for testing this file independently, would not work with render due to different flask instances
 
-CORS(app, origins=["http://localhost:5174", "https://orbital-phishermen.netlify.app"]) 
+CORS(app, origins=["http://localhost:5173", "https://orbital-phishermen.netlify.app"]) 
 #might have to change localhost port for testing locally
 
 @app.route('/api/llm', methods=['POST'])
