@@ -1,11 +1,6 @@
-import { useState, useEffect } from "react";
-import { createClient } from "@supabase/supabase-js";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
+import supabase from "../hooks/createClient";
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
@@ -15,16 +10,14 @@ export default function SignUp() {
   const navigate = useNavigate();
 
   async function signUpNewUser() {
-    console.log(email);
-    console.log(username);
-    console.log(password);
+
     const { data: signUpData, error: signUpError } = await supabase.auth.signUp(
       {
         email: email,
         password: password,
         options: {
           data: {
-            displayName: username, 
+            displayName: username,
           },
         },
       }
@@ -36,25 +29,26 @@ export default function SignUp() {
       return signUpError.message;
     }
 
-    //const user = signUpData.user;
+    const user = signUpData.user;
 
-    // 2. If user creation succeeded, store username in "profiles" table
-    // const { error: insertError } = await supabase.from("profiles").insert([
-    //   {
-    //     user_id: user.id,
-    //     username: username, // or just `username` if variable name matches
-    //   },
-    // ]);
+    if (user) {
+      const { error: insertError } = await supabase.from("profiles").insert([
+        {
+          user_id: user.id,
+          username: username,
+        },
+      ]);
 
-    // if (insertError) {
-    //   setError(insertError.message);
-    //   console.log(insertError);
-    //   return insertError.message;
-    // } else {
-    //   console.log("User and profile created successfully!");
-    //   setError("");
-    //   return "";
-    // }
+      if (insertError) {
+        console.error("Failed to create profile:", insertError.message);
+        setError(insertError.message);
+        return insertError.message;
+      } else {
+        console.log("Profile created successfully!");
+      }
+    }
+
+    return "";
   }
 
   const handleSubmit = async (event) => {
