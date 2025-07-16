@@ -414,29 +414,6 @@ return (
                   </div>
                 </div>
               </div>
-
-              <div className="mb-6">
-                <label className="block text-sm font-semibold text-gray-700 mb-3">
-                  Or Upload a Screenshot
-                </label>
-                <label className="cursor-pointer inline-flex items-center px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 text-sm font-semibold rounded-xl shadow-sm transition duration-200">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    className="hidden"
-                  />
-                  Choose Image
-                </label>
-              </div>
-
-              <button
-                onClick={handleProcess}
-                disabled={loading || !inputText.trim()}
-                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-400 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-[1.02] disabled:scale-100 shadow-lg hover:shadow-xl disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              >
-                Analyse message
-              </button>
             </div>
           </div>
         </div>
@@ -532,6 +509,22 @@ return (
                 <p className="mt-2 text-blue-600 text-xs">Tip: The sidebar on the left stores your recent analyses.</p>
               </div>
             </div>
+          </div>
+
+          {/* Screenshot upload moved to main content area */}
+          <div className="mb-6 px-4 md:px-6 pt-4">
+            <label className="block text-sm font-semibold text-gray-700 mb-3">
+              Or Upload a Screenshot
+            </label>
+            <label className="cursor-pointer inline-flex items-center px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 text-sm font-semibold rounded-xl shadow-sm transition duration-200">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="hidden"
+              />
+              Choose Image
+            </label>
           </div>
 
           <InputSection
