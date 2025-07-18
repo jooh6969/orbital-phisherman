@@ -29,7 +29,7 @@ def predict():
 
 
 if __name__ == '__main__':
-    import backend.phish_llm  # <-- Move this import here, just before app.run
+    import backend.phish_llm  # <-- Ensure all routes are registered before starting Flask
     app.run(debug=True)
 
 
