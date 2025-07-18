@@ -1,41 +1,16 @@
-
 import os
 from google import genai
 from dotenv import load_dotenv
 from google.genai import types
-from flask import Flask, request, jsonify
-from flask_cors import cross_origin
 import re
 import json
-from backend.app import app
 
-#app = Flask(__name__)
 #reinclude this line for testing this file independently, would not work with render due to different flask instances
 
 #CORS(app, origins=["http://localhost:5173", "https://orbital-phishermen.netlify.app"]) 
 #might have to change localhost port for testing locally
 
 print("phish_llm loaded") #debug
-
-@app.route('/api/llm', methods=['POST', 'OPTIONS'])
-@cross_origin()
-def analyze():
-    data = request.json
-    user_text = data.get('text')
-    llm_raw_response = analyse_with_llm(user_text)
-
-    match = re.search(r"```json\s*(\{.*\})\s*```", llm_raw_response, re.DOTALL)
-    if match:
-        json_str = match.group(1)
-        try:
-            llm_json = json.loads(json_str)
-            return jsonify(llm_json)  # return dict
-        except json.JSONDecodeError:
-            # fallback: return raw string if parse fails
-            return jsonify({"response": llm_raw_response})
-    else:
-        # fallback: return raw string if pattern not found
-        return jsonify({"response": llm_raw_response})
 
 def analyse_with_llm(text):
     # Example: simulate response
