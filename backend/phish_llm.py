@@ -4,7 +4,7 @@ from google import genai
 from dotenv import load_dotenv
 from google.genai import types
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import cross_origin
 import re
 import json
 from backend.app import app
@@ -17,7 +17,8 @@ from backend.app import app
 
 print("phish_llm loaded") #debug
 
-@app.route('/api/llm', methods=['POST'])
+@app.route('/api/llm', methods=['POST', 'OPTIONS'])
+@cross_origin()
 def analyze():
     data = request.json
     user_text = data.get('text')
