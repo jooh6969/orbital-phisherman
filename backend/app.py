@@ -7,8 +7,6 @@ import os
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": ["http://localhost:5173", "https://orbital-phishermen.netlify.app", "https://orbital-phishermen.netlify.app/"]}}, supports_credentials=True)
 
-import backend.phish_llm  # This registers /api/llm route
-
 model_path = os.path.join(os.path.dirname(__file__), "phishing_model.pkl")
 with open(model_path, "rb") as f:
     model = pickle.load(f)
@@ -31,6 +29,7 @@ def predict():
 
 
 if __name__ == '__main__':
+    import backend.phish_llm  # <-- Move this import here, just before app.run
     app.run(debug=True)
 
 
