@@ -62,7 +62,7 @@ def generate(input):
         api_key= os.environ.get("GEMINI_API_KEY"),
     )
 
-    model = "gemini-2.5-flash-preview-04-17"
+    model = "gemini-pro"  # Use a supported model for your API key
     contents = [
         types.Content(
             role="user",
