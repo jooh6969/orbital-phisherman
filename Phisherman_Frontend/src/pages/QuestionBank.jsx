@@ -118,5 +118,97 @@ export const allQuestions = [
         explanation: "Scam messages often include urgent links and fake urgency."
       }
     ]
+  },
+  // --- True/False Questions ---
+  {
+    title: "Password Sharing",
+    scenario: "It is safe to share your password with your manager if they ask for it.",
+    options: [
+      { text: "True", isCorrect: false, explanation: "You should never share your password with anyone, even your manager." },
+      { text: "False", isCorrect: true, explanation: "Passwords are personal and should never be shared." }
+    ]
+  },
+  {
+    title: "HTTPS Means Safe",
+    scenario: "If a website uses HTTPS, it is always safe to enter your personal information.",
+    options: [
+      { text: "True", isCorrect: false, explanation: "HTTPS only means the connection is encrypted, not that the site is trustworthy." },
+      { text: "False", isCorrect: true, explanation: "Phishing sites can also use HTTPS. Always check the website's legitimacy." }
+    ]
+  },
+  {
+    title: "Urgent Requests",
+    scenario: "Phishing emails often create a sense of urgency to trick you into acting quickly.",
+    options: [
+      { text: "True", isCorrect: true, explanation: "Urgency is a common tactic used by phishers to pressure victims." },
+      { text: "False", isCorrect: false, explanation: "Be wary of urgent requests, especially for sensitive information." }
+    ]
+  },
+  {
+    title: "Pop-up Security Warnings",
+    scenario: "Legitimate companies will never use pop-up windows to ask for your login credentials.",
+    options: [
+      { text: "True", isCorrect: true, explanation: "Pop-up windows asking for credentials are a red flag for phishing." },
+      { text: "False", isCorrect: false, explanation: "You should never enter credentials into pop-up windows." }
+    ]
+  },
+  // --- More Image-Based Questions ---
+  {
+    type: "image",
+    title: "Email – Real or Phishing?",
+    scenario: "Which of these emails is a phishing attempt?",
+    images: [
+      {
+        src: "https://dummyimage.com/400x200/cccccc/000000&text=Email+A",
+        label: "A",
+        isFake: true
+      },
+      {
+        src: "https://dummyimage.com/400x200/eeeeee/000000&text=Email+B",
+        label: "B",
+        isFake: false
+      }
+    ],
+    options: [
+      {
+        text: "A is phishing",
+        isCorrect: true,
+        explanation: "Email A contains suspicious links and urgent language typical of phishing."
+      },
+      {
+        text: "B is phishing",
+        isCorrect: false,
+        explanation: "Email B is a legitimate notification."
+      }
+    ]
+  },
+  {
+    type: "image",
+    title: "Login Page – Spot the Fake",
+    scenario: "One of these login pages is a phishing site. Which one?",
+    images: [
+      {
+        src: "https://dummyimage.com/400x200/ffcccc/000000&text=Login+1",
+        label: "1",
+        isFake: false
+      },
+      {
+        src: "https://dummyimage.com/400x200/ccccff/000000&text=Login+2",
+        label: "2",
+        isFake: true
+      }
+    ],
+    options: [
+      {
+        text: "1 is fake",
+        isCorrect: false,
+        explanation: "Login 1 is the real site."
+      },
+      {
+        text: "2 is fake",
+        isCorrect: true,
+        explanation: "Login 2 is a phishing site mimicking the real login page."
+      }
+    ]
   }
 ];

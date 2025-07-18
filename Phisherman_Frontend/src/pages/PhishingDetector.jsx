@@ -223,7 +223,7 @@ export default function PhishingDetector() {
     setError(null);
 
     try {
-      const res = await fetch("http://localhost:5000/api/llm", {
+      const res = await fetch("https://orbital-phisherman.onrender.com/api/llm", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -394,29 +394,7 @@ return (
           </button>
         </div>
 
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-            <div className="p-8 border-b border-gray-100">
-              <div className="mb-6">
-                <label className="block text-sm font-semibold text-gray-700 mb-3">
-                  Message Content
-                </label>
-                <div className="relative">
-                  <textarea
-                    value={inputText}
-                    onChange={(e) => setInputText(e.target.value)}
-                    placeholder="Paste the suspicious message, email, or text here for analysis..."
-                    className="w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 resize-none text-gray-700 placeholder-gray-400"
-                    rows={8}
-                  />
-                  <div className="absolute bottom-3 right-3 text-xs text-gray-400">
-                    {inputText.length} characters
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Removed extra textarea/input box here. Only show history list below. */}
 
         {history.length > 0 ? (
           <div className="space-y-1 p-2 overflow-y-auto flex-grow">
