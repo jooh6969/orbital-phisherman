@@ -15,6 +15,8 @@ from backend.app import app
 #CORS(app, origins=["http://localhost:5173", "https://orbital-phishermen.netlify.app"]) 
 #might have to change localhost port for testing locally
 
+print(phish_llm loaded) #debug
+
 @app.route('/api/llm', methods=['POST'])
 def analyze():
     data = request.json

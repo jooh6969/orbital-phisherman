@@ -15,6 +15,7 @@ with open(model_path, "rb") as f:
 
 test_url = "http://google.com"
 
+print("app.py loaded") #debug
 
 @app.route('/predict', methods=['POST'])
 def predict():
