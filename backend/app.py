@@ -61,20 +61,23 @@ def generate(input):
     client = genai.Client(
         api_key= os.environ.get("GEMINI_API_KEY"),
     )
-
-    model = "gemini-pro"  # Use a supported model for your API key
-    contents = [
-        types.Content(
-            role="user",
-            parts=[
-                types.Part.from_text(text=f"Analyse this text : \n{input}"),
-            ],
-        ),
-    ]
-    generate_content_config = types.GenerateContentConfig(
-        response_mime_type="text/plain",
-        system_instruction=[
-            types.Part.from_text(text="""You are a phishing detection assistant. Use your prior knowledge on how official organisations will handle such things and whether it is is likely to be phishing or not based off cross referencing 
+    try:
+        # List available models for render thn choose
+        available_models = [m.name for m in client.list_models()]
+        print("Available models:", available_models)
+        model = available_models[0] if available_models else ""  # Use the first available model
+        contents = [
+            types.Content(
+                role="user",
+                parts=[
+                    types.Part.from_text(text=f"Analyse this text : \n{input}"),
+                ],
+            ),
+        ]
+        generate_content_config = types.GenerateContentConfig(
+            response_mime_type="text/plain",
+            system_instruction=[
+                types.Part.from_text(text="""You are a phishing detection assistant. Use your prior knowledge on how official organisations will handle such things and whether it is is likely to be phishing or not based off cross referencing 
 
 Analyze the message below for signs of phishing.
 
@@ -106,17 +109,19 @@ Only respond in the following JSON format:
   \"phishing_url\": \"...\",
 }
 """),
-        ],
-    )
-
-    response = ""
-    for chunk in client.models.generate_content_stream(
-        model=model,
-        contents=contents,
-        config=generate_content_config,
-    ):
-        response += chunk.text
-    return response
+            ],
+        )
+        response = ""
+        for chunk in client.models.generate_content_stream(
+            model=model,
+            contents=contents,
+            config=generate_content_config,
+        ):
+            response += chunk.text
+        return response
+    except Exception as e:
+        # Return error as JSON string
+        return json.dumps({"error": str(e), "available_models": available_models if 'available_models' in locals() else []})
 
 
 if __name__ == '__main__':
