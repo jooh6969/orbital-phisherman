@@ -223,7 +223,7 @@ export default function PhishingDetector() {
     setError(null);
 
     try {
-      const res = await fetch("https://phishing-backend-beh4.onrender.com/api/llm", {
+      const res = await fetch("https://orbital-phisherman.onrender.com/api/llm", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
