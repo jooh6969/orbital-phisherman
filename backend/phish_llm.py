@@ -26,13 +26,13 @@ def analyze():
         json_str = match.group(1)
         try:
             llm_json = json.loads(json_str)
-            return llm_json  # return dict
+            return jsonify(llm_json)  # return dict
         except json.JSONDecodeError:
             # fallback: return raw string if parse fails
-            return {"response": llm_raw_response}
+            return jsonify({"response": llm_raw_response})
     else:
         # fallback: return raw string if pattern not found
-        return {"response": llm_raw_response}
+        return jsonify({"response": llm_raw_response})
 
 def analyse_with_llm(text):
     # Example: simulate response
