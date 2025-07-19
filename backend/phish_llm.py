@@ -43,9 +43,10 @@ def generate(input):
     load_dotenv()
     client = genai.Client(
         api_key= os.environ.get("GEMINI_API_KEY"),
+        transport="rest"
     )
 
-    model = "gemini-2.5-flash-preview-04-17"
+    model = "models/gemini-1.5-flash"
     contents = [
         types.Content(
             role="user",
