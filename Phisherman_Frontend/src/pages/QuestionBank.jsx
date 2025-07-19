@@ -1,7 +1,7 @@
 import RealLogin from '../assets/RealLogin.png';
 import FakeLogin from '../assets/FakeLogin.png';
 import FakeEmail from '../assets/FakeEmail.png';
-import LegitEmail from '../assets/LegitEmail.png';
+import LegitEmail from '../assets/RealEmail.png';
 
 export const allQuestions = [
   {
