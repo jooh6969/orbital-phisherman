@@ -32,23 +32,23 @@ document.addEventListener("DOMContentLoaded", function () {
       const longUrl = new URL(currentTab.url);
       const url = `${longUrl.hostname}${longUrl.pathname}`;
       //   // Send request to backend
-      //   const response = await fetch("http://localhost:5000/predict", {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify({ url: url }),
-      //   });
+        const response = await fetch("https://orbital-phisherman.onrender.com/predict", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ url: url }),
+        });
 
-      //   if (!response.ok) {
-      //     throw new Error("Network response was not ok");
-      //   }
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
 
-      //   const data = await response.json();
+        const data = await response.json();
 
-      //can play around with this value to 
-      result = "Phishing";
-      confidence = 0.8;
+      //changed to proper return results change to save api calls
+      const result = data.result;
+      const confidence = data.confidence;
 
       // Update UI with result
       resultElement.style.display = "block";

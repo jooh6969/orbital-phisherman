@@ -1,3 +1,8 @@
+import RealLogin from '../assets/RealLogin.png';
+import FakeLogin from '../assets/FakeLogin.png';
+import FakeEmail from '../assets/FakeEmail.png';
+import LegitEmail from '../assets/LegitEmail.png';
+
 export const allQuestions = [
   {
     title: "Phishing Email",
@@ -89,36 +94,6 @@ export const allQuestions = [
       { text: "Call the phone number provided in the email", isCorrect: false, explanation: "Scammers can provide fake phone numbers. Use official contact methods instead." }
     ]
   },
-  //text based images here, placeholders for now
-  {
-    type: "image",
-    title: "Smishing – Real or Fake?",
-    scenario: "Which of the two text messages below is a scam?",
-    images: [
-      {
-        src: "https://tse2.mm.bing.net/th/id/OIP.q__CZuU9p4Dfy-IX04PEVAHaEK?pid=Api",
-        label: "Left",
-        isFake: false
-      },
-      {
-        src: "https://tse4.mm.bing.net/th/id/OIP.WKxg9A9yc74OHz-6WtwPZAHaDx?pid=Api",
-        label: "Right",
-        isFake: true
-      }
-    ],
-    options: [
-      {
-        text: "Left is fake",
-        isCorrect: false,
-        explanation: "That one is a legitimate notification."
-      },
-      {
-        text: "Right is fake",
-        isCorrect: true,
-        explanation: "Scam messages often include urgent links and fake urgency."
-      }
-    ]
-  },
   // --- True/False Questions ---
   {
     title: "Password Sharing",
@@ -159,12 +134,12 @@ export const allQuestions = [
     scenario: "Which of these emails is a phishing attempt?",
     images: [
       {
-        src: "https://dummyimage.com/400x200/cccccc/000000&text=Email+A",
+        src: FakeEmail,
         label: "A",
         isFake: true
       },
       {
-        src: "https://dummyimage.com/400x200/eeeeee/000000&text=Email+B",
+        src: RealEmail,
         label: "B",
         isFake: false
       }
@@ -173,12 +148,12 @@ export const allQuestions = [
       {
         text: "A is phishing",
         isCorrect: true,
-        explanation: "Email A contains suspicious links and urgent language typical of phishing."
+        explanation: "The l in paypal has been replaced with a capital I"
       },
       {
         text: "B is phishing",
         isCorrect: false,
-        explanation: "Email B is a legitimate notification."
+        explanation: "Email B is a legitimate email."
       }
     ]
   },
@@ -188,12 +163,12 @@ export const allQuestions = [
     scenario: "One of these login pages is a phishing site. Which one?",
     images: [
       {
-        src: "https://dummyimage.com/400x200/ffcccc/000000&text=Login+1",
+        src: RealLogin,
         label: "1",
         isFake: false
       },
       {
-        src: "https://dummyimage.com/400x200/ccccff/000000&text=Login+2",
+        src: FakeLogin,
         label: "2",
         isFake: true
       }
