@@ -42,8 +42,7 @@ def analyse_with_llm(text):
 def generate(input):
     load_dotenv()
     client = genai.Client(
-        api_key= os.environ.get("GEMINI_API_KEY"),
-        transport="rest"
+        api_key= os.environ.get("GEMINI_API_KEY")
     )
 
     model = "models/gemini-1.5-flash"
