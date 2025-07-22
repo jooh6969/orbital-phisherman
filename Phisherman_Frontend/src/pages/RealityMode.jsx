@@ -10,6 +10,8 @@ export default function RealityMode() {
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [selectedQuestions, setSelectedQuestions] = useState([]);
+  const [correctCount, setCorrectCount] = useState(0);
+  const [firstAttempt, setFirstAttempt] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
   const fromTab = location.state?.fromTab || "home";
@@ -34,18 +36,28 @@ export default function RealityMode() {
     setSelectedQuestions(shuffledQuestions);
   }, []);
 
+
   const currentQ = selectedQuestions[currentQuestion];
 
+  // Feedback handler must be outside JSX
   const showFeedback = (isCorrect, explanation) => {
+    if (showModal) return; // Prevent double feedback
     setFeedbackText(isCorrect ? `Correct! ${explanation}` : `Incorrect: ${explanation}`);
     setIsCorrectAnswer(isCorrect);
     setShowModal(true);
+    if (!isCorrect) {
+      setFirstAttempt(false);
+    }
   };
 
   const handleNext = async () => {
     setShowModal(false);
 
     if (isCorrectAnswer) {
+      if (firstAttempt) {
+        setCorrectCount((prev) => prev + 1);
+      }
+      setFirstAttempt(true); // reset for next question
       const {
         data: { user },
         error: userError
@@ -88,13 +100,16 @@ export default function RealityMode() {
           window.dispatchEvent(new Event("pointsUpdated"));
         }
       }
-    }
 
-    if (currentQuestion < selectedQuestions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
+      if (currentQuestion < selectedQuestions.length - 1) {
+        setCurrentQuestion(currentQuestion + 1);
+      } else {
+        setQuizCompleted(true);
+      }
     } else {
-      setQuizCompleted(true);
+      setFirstAttempt(false); // mark that first attempt failed
     }
+    // If incorrect let user retry
   };
 
 
@@ -122,6 +137,8 @@ export default function RealityMode() {
     setSelectedQuestions(shuffledQuestions);
     setCurrentQuestion(0);
     setQuizCompleted(false);
+    setCorrectCount(0);
+    setFirstAttempt(true);
   };
 
   const handleReturnHome = () => {
@@ -173,15 +190,16 @@ export default function RealityMode() {
                       <img
                         src={img.src}
                         alt={`Option ${img.label}`}
-                        className="rounded shadow-lg hover:scale-105 transition-transform cursor-pointer"
-                        onClick={() =>
+                        className={`rounded shadow-lg transition-transform ${showModal ? '' : 'hover:scale-105 cursor-pointer'}`}
+                        style={{ pointerEvents: showModal ? 'none' : 'auto', opacity: showModal ? 0.6 : 1 }}
+                        onClick={() => {
                           showFeedback(
                             img.isFake === true,
                             img.isFake
                               ? "Correct! This message is a scam."
                               : "Incorrect – that one is actually real."
-                          )
-                        }
+                          );
+                        }}
                       />
                       <p className="text-white text-center mt-2 font-semibold">Option {img.label}</p>
                     </div>
@@ -192,7 +210,9 @@ export default function RealityMode() {
                   {currentQ.options.map((option, index) => (
                     <button
                       key={index}
-                      onClick={() => showFeedback(option.isCorrect, option.explanation)}
+                      onClick={() => {
+                        showFeedback(option.isCorrect, option.explanation);
+                      }}
                       className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-300 px-6 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105"
                     >
                       {option.text}
@@ -204,7 +224,8 @@ export default function RealityMode() {
           ) : (
             <div className="space-y-6">
               <h2 className="text-4xl font-bold text-green-400 drop-shadow-lg">🎉 Congratulations!</h2>
-              <p className="text-xl opacity-90 drop-shadow">You've successfully completed all 5 phishing awareness questions!</p>
+          <p className="text-xl opacity-90 drop-shadow">You've successfully completed all 5 phishing awareness questions!</p>
+          <p className="text-lg font-semibold text-blue-300 drop-shadow">Your Score: {correctCount} / {selectedQuestions.length}</p>
               <p className="text-lg opacity-80 drop-shadow">You're now better equipped to identify and avoid phishing attempts.</p>
               <div className="space-y-4 pt-6">
                 <button

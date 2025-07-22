@@ -135,6 +135,7 @@ export default function PhishingDetector() {
       fakeurl: result.phishing_url,
       officialurl: result.officialurl,
       user: userLogged.email,
+      user_id: userLogged.id, 
     });
 
     if (supabaseError) {

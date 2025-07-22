@@ -7,6 +7,7 @@ export default function NavBar() {
   const [userEmail, setUserEmail] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [userPoints, setUserPoints] = useState(null);
+  const [userTitle, setUserTitle] = useState(null);
 
   useEffect(() => {
     let currentUserId = null;
@@ -37,6 +38,13 @@ export default function NavBar() {
 
       if (!error && profile) {
         setUserPoints(profile.points ?? 0);
+        // Map points to title
+        const points = profile.points ?? 0;
+        let mappedTitle = "Novice";
+        if (points >= 100) mappedTitle = "Phish Master";
+        else if (points >= 50) mappedTitle = "Phish Hunter";
+        else if (points >= 25) mappedTitle = "Phish Guard";
+        setUserTitle(mappedTitle);
       } else {
         console.error("Failed to fetch user points:", error?.message);
       }
@@ -66,16 +74,17 @@ export default function NavBar() {
         <div className="flex flex-col">
           <div className="py-1 text-xs text-gray-500 font-medium text-right flex justify-between items-center">
             {userEmail ? (
-              <div className="text-right w-full flex justify-end gap-4">
+              <div className="text-right w-full flex justify-end gap-4 items-center">
                 <span>
                   Logged in as{" "}
                   <span className="text-blue-700 font-semibold">{userEmail}</span>
                 </span>
                 <span>
-                  Points:{" "}
-                  <span className="text-green-600 font-semibold">
-                    {userPoints ?? "-"}
-                  </span>
+                  Points: {" "}
+                  <span className="text-green-600 font-semibold">{userPoints ?? "-"}</span>
+                  {userTitle && (
+                    <span className="ml-2 px-2 py-1 bg-blue-100 text-blue-700 rounded-full font-semibold">{userTitle}</span>
+                  )}
                 </span>
               </div>
             ) : (

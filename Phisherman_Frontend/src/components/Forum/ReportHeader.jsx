@@ -8,6 +8,7 @@ export const ReportHeader = ({
   submittedAt,
   scamType,
   suspicionLevel,
+  userTitle,
 }) => {
   const tags = [
     {
@@ -27,6 +28,9 @@ export const ReportHeader = ({
         <div className="flex items-center gap-1">
           <User className="w-4 h-4" />
           {submittedBy}
+          {userTitle && (
+            <span className="ml-2 px-2 py-1 bg-blue-100 text-blue-700 rounded-full font-semibold">{userTitle}</span>
+          )}
         </div>
         <div className="flex items-center gap-1">
           <Calendar className="w-4 h-4" />

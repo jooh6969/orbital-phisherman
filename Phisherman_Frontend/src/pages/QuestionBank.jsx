@@ -2,6 +2,8 @@ import RealLogin from '../assets/RealLogin.png';
 import FakeLogin from '../assets/FakeLogin.png';
 import FakeEmail from '../assets/FakeEmail.png';
 import RealEmail from '../assets/RealEmail.png';
+import FakePaypal from '../assets/FakePaypal.png';
+import RealPaypal from '../assets/RealPaypal.png';
 
 export const allQuestions = [
   {
@@ -183,6 +185,35 @@ export const allQuestions = [
         text: "2 is fake",
         isCorrect: true,
         explanation: "Login 2 is a phishing site mimicking the real login page."
+      }
+    ]
+  },
+  {
+    type: "image",
+    title: "Website – Real or Phishing?",
+    scenario: "Which of these websites is a phishing site?",
+    images: [
+      {
+        src: "FakePaypal", 
+        label: "A",
+        isFake: true
+      },
+      {
+        src: "RealPaypal", 
+        label: "B",
+        isFake: false
+      }
+    ],
+    options: [
+      {
+        text: "A is phishing",
+        isCorrect: true,
+        explanation: "A shows visual inconsistencies or suspicious URL formatting."
+      },
+      {
+        text: "B is phishing",
+        isCorrect: false,
+        explanation: "B is a legitimate website with proper branding and URL."
       }
     ]
   }

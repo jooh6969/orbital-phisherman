@@ -48,6 +48,7 @@ export default function Login() {
     }
     localStorage.setItem("userId", data.user.id);
 
+
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
       .select("points")
@@ -55,7 +56,14 @@ export default function Login() {
       .single();
 
     if (!profileError) {
-      localStorage.setItem("points", profile.points ?? 0);
+      const points = profile.points ?? 0;
+      localStorage.setItem("points", points);
+      // Map points to title
+      let userTitle = "Novice";
+      if (points >= 25 && points < 50) userTitle = "Phish Guard";
+      else if (points >= 50 && points < 100) userTitle = "Phish Hunter";
+      else if (points >= 100) userTitle = "Phish Master";
+      localStorage.setItem("title", userTitle);
     }
 
     console.log("Sign in Successful", data.user);
