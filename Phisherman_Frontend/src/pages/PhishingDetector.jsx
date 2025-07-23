@@ -444,26 +444,30 @@ export default function PhishingDetector() {
       </div>
 
       {/* Main Content */}
+
       <div className={`flex-grow overflow-auto transition-all duration-300`}>
         <div className="max-w-4xl mx-auto bg-white rounded-xl md:rounded-2xl shadow-md md:shadow-lg overflow-hidden mt-2 md:mt-8 px-0">
           <div className="relative flex justify-center items-center py-4 px-4 md:px-6 bg-gray-50 border-b border-gray-100">
             <button
-              onClick={() => setShowHistory(true)}
-              className="absolute left-4 flex items-center gap-1 text-xs px-2 py-1 rounded-md bg-blue-50 hover:bg-blue-100 text-blue-600 transition-colors"
+              onClick={() => setShowHistory(!showHistory)}
+              className="absolute left-4 flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-600 transition-colors"
             >
               <Menu className="w-4 h-4" />
-              <span className="hidden xs:inline">History</span>
+              <span className="text-sm font-medium">Show History</span>
             </button>
 
             <Header />
 
             <div className="absolute right-4 group help-container">
-              <button
-                onClick={() => setShowHelp(!showHelp)}
-                className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors"
-              >
-                <HelpCircle className="w-4 h-4" />
-              </button>
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium text-gray-700">Guide</span>
+                <button
+                  onClick={() => setShowHelp(!showHelp)}
+                  className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors"
+                >
+                  <HelpCircle className="w-4 h-4" />
+                </button>
+              </div>
               <div
                 className={`absolute md:invisible ${
                   showHelp ? "visible" : "invisible"
@@ -485,6 +489,7 @@ export default function PhishingDetector() {
                     Paste a suspicious message or email in the text box or use
                     our autopoulate feature below
                   </li>
+                  <li>Choose to upload a image instead</li>
                   <li>Click "Analyze Message" to detect phishing attempts</li>
                   <li>View the ML and LLM analysis results</li>
                   <li>
