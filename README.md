@@ -1,14 +1,20 @@
 # Phishermen
 
-A machine learning-powered phishing detection platform that analyzes URLs and warns users of suspicious websites in real-time.
+A comprehensive phishing detection platform that combines machine learning, LLM analysis, and community-driven insights to protect users from phishing attempts through both web interface and browser extension.
 
 ---
 
-## 🚀 Proposed Level of Achievement
+## 🚀 Level of Achievement
 
 **Apollo 11**
 
-We aim for the Apollo 11 level as our project integrates multiple systems: a React frontend, Flask backend, and an ML model with additional API integrations (WHOIS, SERPAPI, and Gemini). We have made significant progress on our prototype and plan to expand it further based on feedback and testing.
+Our project successfully integrates multiple complex systems:
+
+- React frontend with advanced user authentication and real-time analysis
+- Flask backend for ML model serving and LLM integration
+- Chrome extension for real-time webpage monitoring
+- Supabase for secure user management and data storage
+- Community-driven phishing report system
 
 ---
 
@@ -29,40 +35,82 @@ Phishing remains one of the most common and dangerous cyber threats today, targe
 ## 🧩 Core Features / User Stories
 
 ### Core Features
-- 🔗 **URL Submission Interface** – Input form to analyze suspicious links.
-- 🧠 **ML-based Phishing Detection** – Detects phishing based on features from the URL.
-- 💬 **LLM Message Analysis (planned)** – Detects scam-like phrasing using Gemini.
-- 👥 **Community Voting System** – Allows users to vote "Safe" or "Unsafe."
-- 🌐 **Browser Extension (planned)** – Warns users in real-time on visiting shady links.
+
+- 🔗 **Multi-modal Analysis** – Analyze both URLs and message content for phishing attempts
+- 🖼️ **Image Text Extraction** – OCR capability to analyze screenshots of suspicious messages
+- 🧠 **ML & LLM Integration** – Combines machine learning URL analysis with LLM-based text analysis
+- 👥 **Community Forum** – Share and discuss detected phishing attempts
+- � **User Dashboard** – Track analysis history and community contributions
+- 🔐 **Secure Authentication** – Email/password authentication with user profiles
+- 🌐 **Chrome Extension** – Real-time webpage monitoring and analysis
+- 🎮 **Reality Mode** – Interactive quiz-based learning system to train users in identifying phishing attempts
 
 ### User Stories
-- As a user, I want to paste a URL and get an immediate safety verdict.
-- As a user, I want to view the confidence level of the detection.
-- As a user, I want to flag phishing websites and see what others voted.
-- As a user, I want the tool to work automatically when I browse.
+
+- As a user, I can paste text or upload screenshots for phishing analysis
+- As a user, I receive detailed ML confidence scores and LLM reasoning
+- As a user, I can share detected phishing attempts with the community
+- As a user, I can track my analysis history
+- As a user, I get real-time protection through the Chrome extension
+- As a user, I can expose myself to real world examples of phishing scams to educate myself
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Layer        | Technology               |
-|--------------|---------------------------|
-| Frontend     | React, Tailwind CSS        |
-| Backend      | Flask (Python)             |
-| Model APIs   | Scikit-learn, Gemini API   |
-| External APIs| WHOIS XML, SerpAPI, ScraperAPI |
-| Deployment   | Netlify (Frontend), Render (Backend) |
-| Versioning   | GitHub                     |
+| Layer       | Technology                           |
+| ----------- | ------------------------------------ |
+| Frontend    | React, Tailwind CSS, Tesseract.js    |
+| Backend     | Flask (Python), Supabase             |
+| Auth & DB   | Supabase Authentication, PostgreSQL  |
+| ML & AI     | Scikit-learn, Google Gemini          |
+| Browser Ext | Chrome Extension API                 |
+| Deployment  | Netlify (Frontend), Render (Backend) |
+| Versioning  | GitHub                               |
+
+## 🔧 Installation & Testing
+
+### Web Application
+
+1. Visit [https://orbital-phishermen.netlify.app/](https://orbital-phishermen.netlify.app/)
+2. Create an account or log in
+3. Try the phishing detector with text input or screenshot
+4. Explore the community forum and your analysis history
+
+### Chrome Extension
+
+1. Download the extension files from the `chrome_extension` folder
+2. Open Chrome and go to `chrome://extensions/`
+3. Enable "Developer mode" in the top right
+4. Click "Load unpacked" and select the `chrome_extension` folder
+5. The extension icon should appear in your toolbar
+6. Click the icon to analyze the current webpage
+
+### Development Setup
+
+1. Clone the repository
+2. Frontend setup:
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
+3. Backend setup:
+   ```bash
+   cd backend
+   pip install -r requirements.txt
+   python app.py
+   ```
 
 ---
 
 ## 🗺️ Development Timeline
 
-| Milestone      | Description                                                             |
-|----------------|-------------------------------------------------------------------------|
-| Milestone 1    | Finalized idea, setup repo, implemented working prototype with ML model |
-| Milestone 2    | Complete backend features, frontend integration, and partial LLM logic  |
-| Milestone 3    | Polish UX/UI, user testing, finalize browser extension, optimize model  |
+| Milestone   | Description                                                             |
+| ----------- | ----------------------------------------------------------------------- |
+| Milestone 1 | Finalized idea, setup repo, implemented working prototype with ML model |
+| Milestone 2 | Complete backend features, frontend integration, and partial LLM logic  |
+| Milestone 3 | Polish UX/UI, user testing, finalize browser extension, optimize model  |
 
 ---
 
@@ -82,12 +130,13 @@ All development and design work are documented in our shared time log spreadshee
 
 ## 🔗 Live Project Links
 
-- **Frontend (Netlify)**: [https://elaborate-druid-a59398.netlify.app/](https://elaborate-druid-a59398.netlify.app/)
+- **Frontend (Netlify)**: [https://orbital-phishermen.netlify.app/](https://orbital-phishermen.netlify.app/)
 - **Backend (Render)**: [https://phishing-backend-beh4.onrender.com](https://phishing-backend-beh4.onrender.com)
 
 ---
 
 ## 📌 Repository Structure
+
 Orbital-7494/
 ├── Backend/
 │ ├── app.py
@@ -101,7 +150,6 @@ Orbital-7494/
 │ └── Procfile
 └── frontend/
 └── ... (React app files)
-
 
 ---
 
