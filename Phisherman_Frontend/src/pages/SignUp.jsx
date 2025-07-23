@@ -14,7 +14,23 @@ export default function SignUp() {
     setIsSubmitting(true);
 
     try {
-      // Use password-based signup instead of magic link (OTP)
+      // First check if username already exists
+      const { data: existingUsers, error: searchError } = await supabase
+        .from("profiles")
+        .select("username")
+        .eq("username", username)
+        .single();
+
+      if (searchError && searchError.code !== "PGRST116") {
+        console.error("Username check failed:", searchError);
+        return "Error checking username availability";
+      }
+
+      if (existingUsers) {
+        return "Username is already taken. Please choose another one.";
+      }
+
+      // Proceed with signup if username is available
       const { data: signUpData, error: signUpError } =
         await supabase.auth.signUp({
           email: email,
@@ -25,7 +41,6 @@ export default function SignUp() {
             },
           },
         });
-
 
       if (signUpError) {
         console.error("Sign-up failed:", signUpError);
@@ -41,6 +56,20 @@ export default function SignUp() {
         console.error(message);
         setError(message);
         return message;
+      }
+
+      const { error: profileError } = await supabase.from("profiles").insert([
+        {
+          user_id: signUpData.user.id,
+          username: username,
+          is_admin: false,
+          points: 0,
+        },
+      ]);
+
+      if (profileError) {
+        console.error("Profile creation failed:", profileError);
+        return "Failed to create user profile";
       }
 
       return "";
@@ -85,8 +114,7 @@ export default function SignUp() {
       if (err === "") {
         notification.className =
           "notification fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-pulse";
-        notification.textContent =
-          "✓ Account Successfully Created! ";
+        notification.textContent = "✓ Account Successfully Created! ";
 
         setError("");
         setUsername("");
@@ -141,24 +169,6 @@ export default function SignUp() {
           <div className="mb-4">
             <label
               className="block text-gray-700 mb-2"
-              htmlFor="signup-username"
-            >
-              Username
-            </label>
-            <input
-              type="text"
-              value={username}
-              id="signup-username"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-              placeholder="Create a username"
-              onChange={(e) => {
-                setUsername(e.target.value);
-              }}
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              className="block text-gray-700 mb-2"
               htmlFor="signup-password"
             >
               Password
@@ -173,9 +183,24 @@ export default function SignUp() {
                 setPassword(e.target.value);
               }}
             />
-            <p className="text-xs text-gray-500 mt-1">
-              Must be at least 8 characters
-            </p>
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 mb-2"
+              htmlFor="signup-username"
+            >
+              Username
+            </label>
+            <input
+              type="text"
+              value={username}
+              id="signup-username"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              placeholder="This name will be displayed"
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
+            />
           </div>
           <button
             type="submit"
