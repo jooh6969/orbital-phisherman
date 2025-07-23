@@ -19,7 +19,6 @@ import {
   BarChart3,
 } from "lucide-react";
 
-
 export default function PhishingDetector() {
   const [inputText, setInputText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -32,6 +31,7 @@ export default function PhishingDetector() {
   const [history, setHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+  const [inputMode, setInputMode] = useState("text"); // 'text' or 'image'
 
   useEffect(() => {
     async function fetchUser() {
@@ -124,7 +124,7 @@ export default function PhishingDetector() {
     if (!isLoggedIn) {
       return "Please log in to post to forum!";
     }
-    console.log(result);
+
     const { error: supabaseError } = await supabase.from("forum_db").insert({
       title: result.title,
       scamType: result.type,
@@ -135,7 +135,7 @@ export default function PhishingDetector() {
       fakeurl: result.phishing_url,
       officialurl: result.officialurl,
       user: userLogged.email,
-      user_id: userLogged.id, 
+      user_id: userLogged.id,
     });
 
     if (supabaseError) {
@@ -147,7 +147,7 @@ export default function PhishingDetector() {
     }
   }
 
-   const handleImageUpload = async (e) => {
+  const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -224,13 +224,16 @@ export default function PhishingDetector() {
     setError(null);
 
     try {
-      const res = await fetch("https://orbital-phisherman.onrender.com/api/llm", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ text: inputText }),
-      });
+      const res = await fetch(
+        "https://orbital-phisherman.onrender.com/api/llm",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ text: inputText }),
+        }
+      );
 
       const data = await res.json(); // RESPONSE FROM THE LLM
 
@@ -244,7 +247,7 @@ export default function PhishingDetector() {
         phishing_url: data.phishing_url,
         reason: data.reasoning,
         type: data.type,
-      }; // EXTRACT OUT THE RESULTS
+      };
 
       //*----------------- CODE FOR THE ML --------------------*//
       //   try {
@@ -364,7 +367,7 @@ export default function PhishingDetector() {
     setInputText(randomSample.content);
   };
 
-return (
+  return (
     <div className="flex flex-col md:flex-row min-h-[calc(100vh-4rem)] w-full relative">
       {/* Mobile Overlay when sidebar is open */}
       {showHistory && (
@@ -376,13 +379,12 @@ return (
 
       {/* History Sidebar */}
       <div
-      className={`${
-        showHistory ? "translate-x-0" : "-translate-x-full md:-translate-x-0"
-      } fixed md:relative z-20 flex flex-col w-4/5 max-w-xs md:w-64 lg:w-72 bg-white md:bg-gray-50 border-r border-gray-200 h-[calc(100vh-4rem)] transition-transform duration-300 ease-in-out ${
-        !showHistory ? "md:hidden" : ""
-      }`}
-    >
-
+        className={`${
+          showHistory ? "translate-x-0" : "-translate-x-full md:-translate-x-0"
+        } fixed md:relative z-20 flex flex-col w-4/5 max-w-xs md:w-64 lg:w-72 bg-white md:bg-gray-50 border-r border-gray-200 h-[calc(100vh-4rem)] transition-transform duration-300 ease-in-out ${
+          !showHistory ? "md:hidden" : ""
+        }`}
+      >
         <div className="p-4 border-b border-gray-200 flex justify-between items-center">
           <h3 className="text-base md:text-lg font-semibold text-gray-800">
             Analysis History
@@ -479,40 +481,92 @@ return (
                   </button>
                 </div>
                 <ol className="list-decimal pl-4 space-y-1">
-                  <li>Paste a suspicious message or email in the text box or use our autopoulate feature below</li>
+                  <li>
+                    Paste a suspicious message or email in the text box or use
+                    our autopoulate feature below
+                  </li>
                   <li>Click "Analyze Message" to detect phishing attempts</li>
                   <li>View the ML and LLM analysis results</li>
-                  <li>For phishing messages, you can share with the community</li>
+                  <li>
+                    For phishing messages, you can share with the community
+                  </li>
                   <li>Use the history sidebar to review past analyses</li>
                 </ol>
-                <p className="mt-2 text-blue-600 text-xs">Tip: The sidebar on the left stores your recent analyses.</p>
+                <p className="mt-2 text-blue-600 text-xs">
+                  Tip: The sidebar on the left stores your recent analyses.
+                </p>
               </div>
             </div>
           </div>
 
-          {/* Screenshot upload moved to main content area */}
+          {/* Input type toggle */}
           <div className="mb-6 px-4 md:px-6 pt-4">
-            <label className="block text-sm font-semibold text-gray-700 mb-3">
-              Or Upload a Screenshot
-            </label>
-            <label className="cursor-pointer inline-flex items-center px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 text-sm font-semibold rounded-xl shadow-sm transition duration-200">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                className="hidden"
-              />
-              Choose Image
-            </label>
-          </div>
+            <div className="flex justify-center space-x-4 mb-6">
+              <button
+                onClick={() => setInputMode("text")}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  inputMode === "text"
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                }`}
+              >
+                Text Input
+              </button>
+              <button
+                onClick={() => setInputMode("image")}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  inputMode === "image"
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                }`}
+              >
+                Image Upload
+              </button>
+            </div>
 
-          <InputSection
-            inputText={inputText}
-            setInputText={setInputText}
-            loading={loading}
-            handleProcess={handleProcess}
-            handleAutopopulate={handleAutopopulate}
-          />
+            {inputMode === "image" ? (
+              <div className="text-center">
+                <label className="block text-sm font-semibold text-gray-700 mb-3">
+                  Upload a Screenshot
+                </label>
+                <label className="cursor-pointer inline-flex items-center px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 text-sm font-semibold rounded-xl shadow-sm transition duration-200">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="hidden"
+                  />
+                  Choose Image
+                </label>
+                {loading && (
+                  <div className="mt-4 flex flex-col items-center space-y-2">
+                    <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                    <p className="text-sm text-gray-600">
+                      Analyzing your image...
+                    </p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <>
+                <InputSection
+                  inputText={inputText}
+                  setInputText={setInputText}
+                  loading={loading}
+                  handleProcess={handleProcess}
+                  handleAutopopulate={handleAutopopulate}
+                />
+                {loading && (
+                  <div className="mt-4 flex flex-col items-center space-y-2">
+                    <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                    <p className="text-sm text-gray-600">
+                      Analyzing your message...
+                    </p>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
 
           {error && (
             <div className="p-3 md:p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-sm md:text-base">
@@ -549,7 +603,8 @@ return (
                         Share with Community
                       </h3>
                       <p className="text-sm md:text-base text-yellow-800">
-                        Help others by sharing this phishing attempt in our forum.
+                        Help others by sharing this phishing attempt in our
+                        forum.
                       </p>
                     </div>
                     <button
