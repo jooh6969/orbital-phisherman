@@ -1,11 +1,6 @@
-import { createClient } from "@supabase/supabase-js";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
+import supabase from "../hooks/createClient";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -47,7 +42,6 @@ export default function Login() {
       return error.message;
     }
     localStorage.setItem("userId", data.user.id);
-
 
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
