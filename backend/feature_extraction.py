@@ -27,7 +27,8 @@ def longest_word_path(url):
     return len(longest_word)
 
 def phish_count(url):
-    with open('phishing_keywords.csv', 'r') as file:
+    csv_path = os.path.join(os.path.dirname(__file__), 'dataset', 'phishing_keywords.csv')
+    with open(csv_path, 'r') as file:
         csv_reader = csv.reader(file)
         url_lower = url.lower()
         countPhish = sum(1 for row in csv_reader if row[0].lower() in url_lower)
