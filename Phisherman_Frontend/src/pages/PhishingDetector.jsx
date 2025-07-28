@@ -261,8 +261,8 @@ export default function PhishingDetector() {
         const ml_ret = await ml_res.json();
 
         const ml_analysis = {
-          result: ml_ret.result,       // e.g. "Phishing" or "Benign"
-          confidence: ml_ret.confidence // e.g. 92.1
+          result: ml_ret.result,       
+          confidence: ml_ret.confidence 
         };
 
         setMLResult(ml_analysis);
