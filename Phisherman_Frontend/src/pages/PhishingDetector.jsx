@@ -252,34 +252,35 @@ export default function PhishingDetector() {
         type: data.type,
       };
 
-      try {
-        const ml_res = await fetch("https://orbital-phisherman.onrender.com/predict", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ url: data.phishing_url }),
-        });
+      t      //*----------------- CODE FOR THE ML --------------------*//
+      //   try {
+      //     const ml_res = await fetch("https://orbital-phisherman.onrender.com/predict", {
+      //       method: "POST",
+      //       headers: {
+      //         "Content-Type": "application/json",
+      //       },
+      //       body: JSON.stringify({ url: data.phishing_url }),
+      //     });
 
-        const ml_ret = await ml_res.json();
+      //     const ml_ret = await ml_res.json();
 
-        const ml_analysis = {
-          result: ml_ret.result,
-          confidence: ml_ret.confidence,
-        };
+      //     const ml_analysis = {
+      //       result: ml_ret.result, // classification
+      //       confidence: ml_ret.confidence, //confidence of the prediction
+      //     };
 
-        setMLResult(ml_analysis);
-      } catch (error) {
-        console.error("ML fetch failed:", error);
+      //     setMLResult(ml_analysis);
+      //   } catch (error) {
+      //     console.error("Error with ML:", error);
+      //     setError("ML Backend Error: " + error.message);
+      //     setMLResult(null);
+      //   }
+      const ml_res = {
+        result: "Phishing",
+        confidence: "40.2",
+      }; // HARD CODED CODE FOR NOW TO USE ON THE FRONT END
 
-        const fallbackMLResult = {
-          result: "Phishing",
-          confidence: "40.2",
-        };
-
-        setError("ML Backend Error: " + error.message);
-        setMLResult(fallbackMLResult);
-      }
+      setMLResult(ml_res);
 
 
 
