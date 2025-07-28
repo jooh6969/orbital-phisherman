@@ -261,15 +261,14 @@ export default function PhishingDetector() {
         const ml_ret = await ml_res.json();
 
         const ml_analysis = {
-          result: ml_ret.result,       
-          confidence: ml_ret.confidence 
+          result: ml_ret.result,
+          confidence: ml_ret.confidence,
         };
 
         setMLResult(ml_analysis);
       } catch (error) {
-        console.error("Error with ML fetch:", error);
+        console.error("ML fetch failed:", error);
 
-        // Fallback if backend fails
         const fallbackMLResult = {
           result: "Phishing",
           confidence: "40.2",
@@ -277,7 +276,8 @@ export default function PhishingDetector() {
 
         setError("ML Backend Error: " + error.message);
         setMLResult(fallbackMLResult);
-      }
+}
+
 
 
       if (data.classification === "Phishing") {
