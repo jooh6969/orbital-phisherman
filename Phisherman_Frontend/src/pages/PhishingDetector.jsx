@@ -223,6 +223,9 @@ export default function PhishingDetector() {
     setShowPrompt(false);
     setError(null);
 
+    let ml_res = null;
+    let ml_analysis = null;
+
     try {
       const res = await fetch(
         "https://orbital-phisherman.onrender.com/api/llm",
@@ -276,7 +279,7 @@ export default function PhishingDetector() {
 
         setError("ML Backend Error: " + error.message);
         setMLResult(fallbackMLResult);
-}
+      }
 
 
 
