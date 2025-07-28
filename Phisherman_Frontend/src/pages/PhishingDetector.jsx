@@ -252,7 +252,7 @@ export default function PhishingDetector() {
         type: data.type,
       };
 
-      t      //*----------------- CODE FOR THE ML --------------------*//
+            //*----------------- CODE FOR THE ML --------------------*//
       //   try {
       //     const ml_res = await fetch("https://orbital-phisherman.onrender.com/predict", {
       //       method: "POST",
